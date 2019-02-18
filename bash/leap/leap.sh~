@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+
+print_true() {
+    printf "true\n"
+}
+
+print_false() {
+    printf "false\n"
+}
+
+print_usage() {
+    printf "Usage: %s.sh <%s>\n" leap year
+}
+
+main() {
+    local year=${1:-}
+
+    if (( $# != 1 )); then
+        print_usage
+        return 1
+    elif ! [[ $year =~ ^[0-9]*$ ]]; then
+        print_usage
+        return 1
+    elif ! (( $year % 400 )); then
+        print_true
+    elif ! (( $year % 100 )); then
+        print_false
+    elif ! (( $year % 4 )); then
+        print_true
+    else
+        print_false
+    fi
+}
+
